@@ -14,7 +14,6 @@ albedo_color = Color( 0.917647, 0.603922, 0.87451, 1 )
 [sub_resource type="PrismMesh" id=6]
 
 [node name="KinematicBody" type="KinematicBody"]
-collision_mask = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 0.5, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0 )

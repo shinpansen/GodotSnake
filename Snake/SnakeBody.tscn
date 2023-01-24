@@ -6,7 +6,9 @@
 script/source = "extends KinematicBody
 
 func _on_Area_body_entered(body):
-	print(\"Gloubi boulga\")
+#	print(body)
+	body.test_si_c_bien()
+#	print(\"Gloubi boulga\")
 "
 
 [sub_resource type="CubeMesh" id=1]

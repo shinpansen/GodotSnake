@@ -16,6 +16,9 @@ var _tick_time: float = 1000/60
 onready var _tick_start: int = OS.get_ticks_msec()
 onready var _main_node: Spatial = get_tree().root.get_child(0)
 
+func test_si_c_bien():
+	print("est ce que le gdscript c'est bien finalement ?")
+
 func _ready():
 	pass
 	
