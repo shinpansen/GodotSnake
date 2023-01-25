@@ -23,6 +23,10 @@ func _ready():
 	pass
 	
 func _physics_process(delta):
+	#delta
+	if Input.is_action_pressed("ui_down"):
+		delta /= 4
+	
 	#Tick
 	_tick_count = OS.get_ticks_msec() - _tick_start
 	
@@ -63,13 +67,12 @@ func _physics_process(delta):
 			index += 1
 		
 		if dist > _bodies_distance:
-			var to_previous= Vector3(pos_previous.origin - pos.origin)
 			var dist_ratio: float = (dist - _bodies_distance) / abs(pos_previous.origin.distance_to(pos.origin))
 			pos.origin = pos.origin.move_toward(pos_previous.origin, dist_ratio)
 		
 		var to_target = Vector3(pos.origin - _bodies_list[n].transform.origin)
 		_bodies_list[n].transform = _bodies_list[n].transform.looking_at(pos.origin, Vector3.UP)
-		_bodies_list[n].move_and_collide(to_target * _moving_speed * delta)
+		_bodies_list[n].move_and_collide(to_target * _moving_speed * 1.5 * delta)
 #		_bodies_list[n].transform.origin = pos.origin
 #		_bodies_list[n].transform.basis = pos.basis
 	
