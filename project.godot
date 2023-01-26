@@ -10,12 +10,30 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "KinematicBody",
+"class": "SnakeBase",
+"language": "GDScript",
+"path": "res://Snake/Scripts/snake_base.gd"
+}, {
+"base": "SnakeBase",
+"class": "SnakeBody",
+"language": "GDScript",
+"path": "res://Snake/Scripts/snake_body.gd"
+}, {
+"base": "KinematicBody",
 "class": "SnakeComponent",
 "language": "GDScript",
-"path": "res://Scripts/Snake.gd"
+"path": "res://Snake/Scripts/snake.gd"
+}, {
+"base": "SnakeBase",
+"class": "SnakeHead",
+"language": "GDScript",
+"path": "res://Snake/Scripts/snake_head.gd"
 } ]
 _global_script_class_icons={
-"SnakeComponent": ""
+"SnakeBase": "",
+"SnakeBody": "",
+"SnakeComponent": "",
+"SnakeHead": ""
 }
 
 [application]

@@ -1,12 +1,12 @@
 class_name SnakeComponent
-
 extends KinematicBody
 
-export (PackedScene) var SnakeScene
+export (PackedScene) var SnakeHead
+export (PackedScene) var SnakeBody
 
 var _bodies_list = []
 var _positions_history = []
-var _nb_bodies: int = 5
+var _nb_bodies: int = 1
 var _bodies_distance: float = 2.5
 var _rotation_speed: float = 4
 var _moving_speed: float = 10
@@ -16,10 +16,12 @@ var _tick_time: float = 1000/60
 onready var _tick_start: int = OS.get_ticks_msec()
 onready var _main_node: Spatial = get_tree().root.get_child(0)
 
+
 func test_si_c_bien():
-	print("est ce que le gdscript c'est bien finalement ?")
+	print("est ce que le gdscript c'est pas si mal finalement ?")
 
 func _ready():
+	self.add_child(SnakeHead.instance())
 	pass
 	
 func _physics_process(delta):
@@ -33,14 +35,18 @@ func _physics_process(delta):
 	#Bodies init
 	if _bodies_list.size() < _nb_bodies:
 		for n in range(_bodies_list.size(), _nb_bodies):
-			_bodies_list.append(SnakeScene.instance())
-			_main_node.add_child(_bodies_list[n])
+			pass
+#			_snake_body.SnakeHead = SnakeHead
+#			_snake_body.transform.origin = Vector3(-1, 0, -1)
+#			_main_node.add_child(_snake_body)
+#			_bodies_list.append(SnakeBody.instance())
+#			_main_node.add_child(_bodies_list[n])
 	
 	#Rotation
 	var input_h = Input.get_action_strength("ui_left") - Input.get_action_strength("ui_right")
 	if input_h != 0:
 		rotate(Vector3(0, input_h, 0).normalized(), _rotation_speed * delta)
-		
+	
 	#Adding body
 	if Input.is_action_just_pressed("ui_space"):
 		_nb_bodies += 1
@@ -53,7 +59,7 @@ func _physics_process(delta):
 		
 	#Moving head
 	move_and_collide(transform.basis.x * _moving_speed * delta)
-	
+	return
 	#Moving bodies
 	var index: int = 1
 	for n in _bodies_list.size():
