@@ -7,11 +7,12 @@ export(float, 0, 20) var bodies_gap = 2
 
 var _bodies_list = []
 
+
 func _ready():
 	moving_speed = snake_speed
 
+
 func _physics_process(delta):
-	
 	move_and_collide(transform.basis.z * moving_speed * delta)
 	
 	var input_h = Input.get_action_strength("ui_left") - Input.get_action_strength("ui_right")
@@ -20,16 +21,16 @@ func _physics_process(delta):
 		
 	#test
 	if Input.is_action_just_pressed("ui_space"):
-		append_new_body()
+		snake_add_new_body(Vector3.ZERO)
 	
-	#Clearing the positions history of the last body (cos useless)
+	#Clearing positions history of the last body (because it is parent of nobody)
 	if _bodies_list.size() > 0:
 		_bodies_list[_bodies_list.size()-1].positions_history.pop_at(0)
-	
 
-func append_new_body():
+
+func snake_add_new_body(pos: Vector3):
 	var snake_body = preload("res://Snake/Scenes/snake_body.tscn").instance()
 	var parent = self if _bodies_list.size() == 0 else _bodies_list[_bodies_list.size()-1]
-	snake_body.init_body(parent, moving_speed, bodies_gap, _bodies_list.size() + 1)
+	snake_body.init(pos, parent, moving_speed, bodies_gap, _bodies_list.size() + 1)
 	_bodies_list.append(snake_body)
 	get_tree().root.get_child(0).add_child(snake_body)

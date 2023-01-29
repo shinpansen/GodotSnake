@@ -16,7 +16,7 @@ albedo_color = Color( 0.917647, 0.603922, 0.87451, 1 )
 script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( -2.18557e-08, 0, 1, 0, 0.5, 0, -0.5, 0, -4.37114e-08, 0, 0.5, 0.5 )
+transform = Transform( -4.37114e-08, 0, 1, 0, 0.5, 0, -1, 0, -4.37114e-08, 0, 0.5, 1 )
 shape = SubResource( 1 )
 
 [node name="SnakeHeadMesh" type="MeshInstance" parent="."]
