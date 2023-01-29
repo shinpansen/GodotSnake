@@ -1,8 +1,7 @@
 class_name SnakeBase extends KinematicBody
 
-const history_max_size = 100
+const history_max_size: int = 100
 
-var num = 0
 var moving_speed: float = 10
 var positions_history = []
 
@@ -19,7 +18,8 @@ func _physics_process(delta):
 		_tick_count = 0
 		_tick_start = OS.get_ticks_msec()
 		positions_history.push_front(transform)
-		#print(str(num) + " : " + str(positions_history.size()))
+		print(transform.basis)
 	
-	if positions_history.size() > 100:
-		positions_history.pop_at(100)
+	if positions_history.size() > history_max_size:
+		positions_history.pop_at(history_max_size)
+
