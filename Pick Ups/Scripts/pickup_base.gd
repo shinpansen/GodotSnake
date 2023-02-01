@@ -8,5 +8,5 @@ func _physics_process(delta):
 
 func _on_body_entered(body):
 	if body.has_method("snake_add_new_body"):
-		body.snake_add_new_body(transform.origin)
+		body.snake_add_new_body(transform.origin, true)
 		queue_free()
