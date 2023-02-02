@@ -1,6 +1,7 @@
 class_name SnakeBody extends SnakeBase
 
 var parent_body: SnakeBase = null
+var temp_body: SnakeBase = null
 var distance_to_parent: float = 2
 var n: String = ""
 
@@ -20,15 +21,9 @@ func init(start_pos: Vector3, parent: SnakeBase, gap: float, play_animation, na)
 	n = na
 
 
-func is_ready_to_follow() -> bool:
-#	var dist = transform.origin.distance_to(parent_body.transform.origin)
-#	var dist_z = abs(transform.origin.z - parent_body.transform.origin.z)
-#	return (
-#		_start_animation_finised and 
-#		dist_z < 1 and 
-#		dist <= distance_to_parent * 2
-#	)
-	return _start_animation_finised
+func has_finished_animation(pos: Vector3) -> bool:
+	var dist = transform.origin.distance_to(pos)
+	return _start_animation_finised and dist < 0.1
 
 
 func step_back(dist: float):
@@ -44,6 +39,8 @@ func _ready():
 func _physics_process(delta):
 	if Input.is_action_pressed("ui_up"):
 		delta /= 4
+	
+	_handle_temp_body()
 	
 	if (!_start_animation_finised):
 		_play_start_animation(delta)
@@ -63,7 +60,7 @@ func _play_start_animation(delta):
 
 func _play_stepping_back_animation(delta):
 	var dist = transform.origin.distance_to(_stepping_back_init_pos)
-	if dist < _stepping_back_dist / 1.5:
+	if dist < _stepping_back_dist:
 		move_and_collide(transform.basis.z * moving_speed / 1.5 * delta)
 	else:
 		_stepping_back = false
@@ -84,9 +81,18 @@ func _move_toward_parent(delta):
 		var dist_ratio: float = (dist - distance_to_parent) / abs(pos_previous.origin.distance_to(pos.origin))
 		pos.origin = pos.origin.move_toward(pos_previous.origin, dist_ratio)
 	
+	var look_at_vector = Vector3(pos.origin.x, transform.origin.y, pos.origin.z)
+	transform = transform.looking_at(look_at_vector, Vector3.UP)
 	var to_target = Vector3(pos.origin - transform.origin)
-	transform = transform.looking_at(pos.origin, Vector3.UP)
 	move_and_collide(to_target * moving_speed * delta)
 	
 	#Clearing position history	
 	parent_body.positions_history.pop_at(i)
+
+
+func _handle_temp_body(): 
+	if (temp_body != null and temp_body.has_finished_animation(transform.origin)):
+		var mesh = util.get_node_type(get_children(), MeshInstance)
+		mesh.set_surface_material(0, materials[0])
+		temp_body.queue_free()
+		temp_body = null
