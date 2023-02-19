@@ -32,21 +32,6 @@ func _physics_process(delta):
 	#test
 	if Input.is_action_just_pressed("ui_space"):
 		snake_add_new_body(Vector3.ZERO)
-	
-	#Clearing positions history of the last body (because it is parent of nobody)
-#	if _bodies_list.size() > 0:
-#		_bodies_list[_bodies_list.size()-1].positions_history.pop_at(0)
-#
-#	var last_body = get_last_body()
-#	if (
-#			_snake_tail != null and 
-#			last_body != null and 
-#			last_body != _snake_tail.parent_body and
-#			last_body.is_ready_to_follow()
-#	):
-#		print("step back")
-#		_snake_tail.parent_body = last_body
-#		_snake_tail.step_back(bodies_gap)
 
 
 func snake_add_new_body(pos: Vector3):

@@ -37,7 +37,7 @@ func _ready():
 
 
 func _physics_process(delta):
-	if Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed("ui_down"):
 		delta /= 4
 	
 	_handle_temp_body()

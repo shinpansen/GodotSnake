@@ -2,8 +2,8 @@ class_name SnakeBase extends KinematicBody
 
 const util = preload("res://Scripts/util.gd")
 const materials: Array = [
-	preload("res://Snake/Assets/snake_skin.tres"),
-	preload("res://Snake/Assets/snake_skin_transparent.tres"),
+	preload("res://Snake/Models/snake_skin.tres"),
+	preload("res://Snake/Models/snake_skin_transparent.tres"),
 ]
 const history_max_size: int = 100
 
