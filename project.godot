@@ -33,13 +33,19 @@ _global_script_classes=[ {
 "class": "SnakeHead",
 "language": "GDScript",
 "path": "res://Snake/Scripts/snake_head.gd"
+}, {
+"base": "Node",
+"class": "Ticker",
+"language": "GDScript",
+"path": "res://Scripts/Tools/ticker.gd"
 } ]
 _global_script_class_icons={
 "PickupBase": "",
 "SnakeBase": "",
 "SnakeBody": "",
 "SnakeComponent": "",
-"SnakeHead": ""
+"SnakeHead": "",
+"Ticker": ""
 }
 
 [application]

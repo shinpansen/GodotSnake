@@ -2,7 +2,6 @@ class_name SnakeHead extends SnakeBase
 
 export(float, 1, 50) var snake_speed = 10
 export(float, 1, 10) var rotation_speed = 4
-export(int, 0, 20) var nb_bodies = 5
 export(float, 0, 20) var bodies_gap = 2
 
 const parts_scenes: Array = [
@@ -37,23 +36,23 @@ func _physics_process(delta):
 func snake_add_new_body(pos: Vector3):
 	if _snake_tail == null:
 		_snake_tail = get_new_body(pos, true, true, false)
-		get_root().add_child(_snake_tail)
+		root.add_child(_snake_tail)
 	else:
 		var tra = get_last_body().transform
 		var snake_body = get_new_body(tra.origin + tra.basis.z * 3, false, false, true)
-		var temp_body = get_new_body(pos, true, false, false)
-		snake_body.temp_body = temp_body
+#		var temp_body = get_new_body(pos, true, false, false)
+#		snake_body.temp_body = temp_body
 		_bodies_list.append(snake_body)
 		_snake_tail.parent_body = snake_body
 		_snake_tail.step_back(bodies_gap)
-		get_root().add_child(snake_body)
-		get_root().add_child(temp_body)
+		root.add_child(snake_body)
+#		root.add_child(temp_body)
 
 
 func get_new_body(pos: Vector3, animation: bool, tail: bool, transparent: bool) -> Node:
 	var scene = parts_scenes[0].instance() if tail else parts_scenes[1].instance()
-	var material = materials[1] if transparent else materials[0]
-	util.get_node_type(scene.get_children(), MeshInstance).set_surface_material(0, material)
+#	var material = materials[1] if transparent else materials[0]
+#	node_tools.get_node_type(scene.get_children(), MeshInstance).set_surface_material(0, material)
 	scene.init(pos, get_last_body(), bodies_gap, animation, "")
 	return scene
 

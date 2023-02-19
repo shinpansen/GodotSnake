@@ -1,0 +1,18 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Materials/Dark/dark_gray.tres" type="Material" id=1]
+[ext_resource path="res://Snake/Assets/Models/snake_head.glb" type="PackedScene" id=2]
+[ext_resource path="res://Materials/Green/green_yellow.tres" type="Material" id=3]
+[ext_resource path="res://Materials/Green/green.tres" type="Material" id=4]
+[ext_resource path="res://Materials/Green/light_green.tres" type="Material" id=5]
+
+[node name="snake_head" instance=ExtResource( 2 )]
+
+[node name="SnakeHead" parent="." index="0"]
+transform = Transform( 0.873093, 0, 0, 0, -0.601225, 0, 0, 0, 1.20098, 0, 0, 0.0260844 )
+material/0 = ExtResource( 3 )
+material/1 = ExtResource( 5 )
+material/2 = ExtResource( 4 )
+
+[node name="SnakeEyes" parent="." index="1"]
+material/0 = ExtResource( 1 )

@@ -1,6 +1,6 @@
 class_name SnakeBody extends SnakeBase
 
-var parent_body: SnakeBase = null
+export(Resource) var parent_body
 var temp_body: SnakeBase = null
 var distance_to_parent: float = 2
 var n: String = ""
@@ -92,7 +92,7 @@ func _move_toward_parent(delta):
 
 func _handle_temp_body(): 
 	if (temp_body != null and temp_body.has_finished_animation(transform.origin)):
-		var mesh = util.get_node_type(get_children(), MeshInstance)
-		mesh.set_surface_material(0, materials[0])
+		var mesh = node_tools.get_node_type(get_children(), MeshInstance)
+#		mesh.set_surface_material(0, materials[0])
 		temp_body.queue_free()
 		temp_body = null

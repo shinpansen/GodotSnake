@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Snake/Scenes/snake_head.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Pick Ups/Scenes/pickup_grow.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scripts/FpsCounter.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/Tools/fps_counter.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/Spatial/camera.gd" type="Script" id=4]
 
 [sub_resource type="CubeMesh" id=1]
 
@@ -10,22 +11,22 @@
 
 [node name="World" type="Spatial" groups=["Main"]]
 
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.942787, 0.333395, 0, -0.333395, 0.942787, 0, 6.36579, 14.1908 )
+script = ExtResource( 4 )
+
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( -0.925772, 0.136915, -0.352422, 0, 0.932128, 0.362129, 0.378083, 0.335249, -0.862938, -7.52991, 30.5783, -35.7819 )
 light_energy = 0.5
 light_bake_mode = 2
 shadow_enabled = true
 
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.775176, 0.631746, 0, -0.631746, 0.775176, 0, 15.6814, 27.8634 )
-current = true
-
 [node name="Ground" type="Area" parent="."]
 collision_layer = 4
 collision_mask = 0
 
 [node name="MeshInstance" type="MeshInstance" parent="Ground"]
-transform = Transform( 20, 0, 0, 0, 0.5, 0, 0, 0, 20, 0, -0.5, 0 )
+transform = Transform( 50, 0, 0, 0, 0.5, 0, 0, 0, 50, 0, -0.5, 0 )
 layers = 4
 mesh = SubResource( 1 )
 skeleton = NodePath("../..")
@@ -38,6 +39,7 @@ shape = SubResource( 3 )
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
 snake_speed = 8.0
 rotation_speed = 3.0
+bodies_gap = 0.8
 
 [node name="Pickups" type="Spatial" parent="."]
 

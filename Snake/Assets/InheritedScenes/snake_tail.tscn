@@ -8,7 +8,7 @@
 [node name="snake_tail" instance=ExtResource( 1 )]
 
 [node name="SnakeTail" parent="." index="0"]
-transform = Transform( 0.468229, 0, 0, 0, 0.409499, 0, 0, 0, 1.31332, 0, 0.0401923, -0.0986214 )
+transform = Transform( 0.468229, 0, 0, 0, 0.409499, 0, 0, 0, 1.31332, 0, 0.0401923, -1.93509 )
 material/0 = ExtResource( 2 )
 material/1 = ExtResource( 4 )
 material/2 = ExtResource( 3 )
