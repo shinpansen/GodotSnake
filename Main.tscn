@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Snake/Scenes/snake_head.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Pick Ups/Scenes/pickup_grow.tscn" type="PackedScene" id=2]
@@ -6,6 +6,14 @@
 [ext_resource path="res://Scripts/Spatial/camera.gd" type="Script" id=4]
 
 [sub_resource type="CubeMesh" id=1]
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.760784, 0.603922, 0.333333, 1 )
+emission_enabled = true
+emission = Color( 0.431373, 0.0862745, 0.0862745, 1 )
+emission_energy = 3.06
+emission_operator = 0
+emission_on_uv2 = false
 
 [sub_resource type="BoxShape" id=3]
 
@@ -30,16 +38,17 @@ transform = Transform( 50, 0, 0, 0, 0.5, 0, 0, 0, 50, 0, -0.5, 0 )
 layers = 4
 mesh = SubResource( 1 )
 skeleton = NodePath("../..")
+material/0 = SubResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ground"]
 transform = Transform( 20, 0, 0, 0, 0.5, 0, 0, 0, 20, 0, -0.5, 0 )
 shape = SubResource( 3 )
 
 [node name="Snake" parent="." instance=ExtResource( 1 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
+transform = Transform( -0.407183, 0, 0.913347, 0, 1, 0, -0.913347, 0, -0.407183, 0, 0, 0 )
 snake_speed = 8.0
-rotation_speed = 3.0
-bodies_gap = 0.8
+rotation_speed = 3.5
+bodies_gap = 0.78
 
 [node name="Pickups" type="Spatial" parent="."]
 

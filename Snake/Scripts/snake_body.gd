@@ -1,9 +1,8 @@
 class_name SnakeBody extends SnakeBase
 
-export(Resource) var parent_body
+var parent_body: SnakeBase = null
 var temp_body: SnakeBase = null
 var distance_to_parent: float = 2
-var n: String = ""
 
 var _start_position: Vector3
 var _start_animation_finised: bool = false
@@ -12,13 +11,12 @@ var _stepping_back_dist: float
 var _stepping_back_init_pos: Vector3
 
 
-func init(start_pos: Vector3, parent: SnakeBase, gap: float, play_animation, na):
+func init(start_pos: Vector3, parent: SnakeBase, gap: float, play_animation):
 	transform.origin = start_pos
 	parent_body = parent
 	distance_to_parent = gap
 	_start_position = start_pos
 	_start_animation_finised = !play_animation
-	n = na
 
 
 func has_finished_animation(pos: Vector3) -> bool:
@@ -61,7 +59,7 @@ func _play_start_animation(delta):
 func _play_stepping_back_animation(delta):
 	var dist = transform.origin.distance_to(_stepping_back_init_pos)
 	if dist < _stepping_back_dist:
-		move_and_collide(transform.basis.z * moving_speed / 1.5 * delta)
+		move_and_collide(transform.basis.z * moving_speed * delta)
 	else:
 		_stepping_back = false
 
@@ -81,10 +79,11 @@ func _move_toward_parent(delta):
 		var dist_ratio: float = (dist - distance_to_parent) / abs(pos_previous.origin.distance_to(pos.origin))
 		pos.origin = pos.origin.move_toward(pos_previous.origin, dist_ratio)
 	
-	var look_at_vector = Vector3(pos.origin.x, transform.origin.y, pos.origin.z)
-	transform = transform.looking_at(look_at_vector, Vector3.UP)
+#	var look_at_vector = Vector3(pos.origin.x, transform.origin.y, pos.origin.z)
+#	transform = transform.looking_at(look_at_vector, Vector3.UP)
 	var to_target = Vector3(pos.origin - transform.origin)
 	move_and_collide(to_target * moving_speed * delta)
+	look_at(pos.origin, Vector3.UP)
 	
 	#Clearing position history	
 	parent_body.positions_history.pop_at(i)
@@ -94,5 +93,6 @@ func _handle_temp_body():
 	if (temp_body != null and temp_body.has_finished_animation(transform.origin)):
 		var mesh = node_tools.get_node_type(get_children(), MeshInstance)
 #		mesh.set_surface_material(0, materials[0])
+		get_node("Model").visible = true
 		temp_body.queue_free()
 		temp_body = null

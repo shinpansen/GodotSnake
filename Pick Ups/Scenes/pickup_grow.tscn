@@ -6,7 +6,8 @@
 
 [sub_resource type="SpatialMaterial" id=2]
 flags_transparent = true
-albedo_color = Color( 1, 0.968627, 0.478431, 0.705882 )
+flags_unshaded = true
+albedo_color = Color( 1, 0, 0.843137, 0.529412 )
 
 [sub_resource type="SphereShape" id=3]
 
@@ -24,7 +25,7 @@ shape = SubResource( 3 )
 
 [node name="OmniLight" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.637534, 0 )
-light_color = Color( 1, 0.941176, 0, 1 )
-light_energy = 0.25
+light_color = Color( 1, 0.65098, 0.988235, 1 )
+light_energy = 2.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
