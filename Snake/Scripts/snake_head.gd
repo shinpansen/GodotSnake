@@ -37,6 +37,10 @@ func _ready():
 
 
 func _physics_process(delta):
+	# TEST SLOW MO
+	if Input.is_action_pressed("ui_down"):
+		delta /= 4
+		
 	_init_snake()
 	_handle_inputs(delta)
 	move_and_collide(transform.basis.z * moving_speed * delta)
@@ -75,5 +79,5 @@ func _get_last_body() -> SnakeBody:
 
 func _get_new_body_scene_id() -> int:
 	if _snake_tail != null:
-		return 1 if _bodies_list.size() == 0 else 2
+		return 2 if _bodies_list.size() == 0 else 2
 	return 0

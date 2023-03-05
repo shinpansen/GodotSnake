@@ -1,6 +1,7 @@
 class_name SnakeBase extends KinematicBody
 
 const node_tools = preload("res://Scripts/Tools/node_tools.gd")
+const vector_tools = preload("res://Scripts/Spatial/vector_tools.gd")
 #const materials: Array = [
 #	preload("res://Snake/Models/snake_skin.tres"),
 #	preload("res://Snake/Models/snake_skin_transparent.tres"),

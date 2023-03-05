@@ -1,14 +1,41 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Snake/Assets/Models/snake_body.glb" type="PackedScene" id=1]
 [ext_resource path="res://Materials/Green/green_yellow.tres" type="Material" id=2]
 [ext_resource path="res://Materials/Green/green.tres" type="Material" id=3]
 [ext_resource path="res://Materials/Green/light_green.tres" type="Material" id=4]
+[ext_resource path="res://Snake/Assets/InheritedScenes/Scripts/snake_body.gd" type="Script" id=5]
 
 [node name="snake_body" instance=ExtResource( 1 )]
+script = ExtResource( 5 )
 
 [node name="SnakeBody2" parent="." index="0"]
-transform = Transform( 0.468229, 0, 0, 0, 0.409499, 0, 0, 0, 1.31332, 0, 0, -0.125015 )
+transform = Transform( 0.24, 0, 0, 0, 1.43051e-08, 0.24, 0, -0.24, 1.43051e-08, 0, 0, 0 )
+script = ExtResource( 5 )
+
+[node name="SnakeBody2Object" parent="SnakeBody2/Skeleton" index="0"]
 material/0 = ExtResource( 2 )
 material/1 = ExtResource( 4 )
 material/2 = ExtResource( 3 )
+
+[node name="FrontSkeletonIK" type="SkeletonIK" parent="SnakeBody2/Skeleton" index="1"]
+process_priority = 1
+root_bone = "SnakeBody2.BoneARoot"
+tip_bone = "SnakeBody2.BoneA2"
+target_node = NodePath("../../../FrontPosition3D/FrontTarget")
+
+[node name="BackSkeletonIK" type="SkeletonIK" parent="SnakeBody2/Skeleton" index="2"]
+process_priority = 1
+root_bone = "SnakeBody2.BoneBRoot"
+tip_bone = "SnakeBody2.BoneB2"
+target_node = NodePath("../../../BackPosition3D/BackTarget")
+
+[node name="FrontPosition3D" type="Position3D" parent="." index="1"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.855 )
+
+[node name="FrontTarget" type="Position3D" parent="FrontPosition3D" index="0"]
+
+[node name="BackPosition3D" type="Position3D" parent="." index="2"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.882354 )
+
+[node name="BackTarget" type="Position3D" parent="BackPosition3D" index="0"]
