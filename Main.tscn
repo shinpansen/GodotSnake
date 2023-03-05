@@ -20,7 +20,7 @@ emission_on_uv2 = false
 [node name="World" type="Spatial" groups=["Main"]]
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.942787, 0.333395, 0, -0.333395, 0.942787, 0, 6.36579, 14.1908 )
+transform = Transform( 1, 0, 0, 0, 0.529564, 0.84827, 0, -0.84827, 0.529564, 0, 13.4398, 12.655 )
 script = ExtResource( 4 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
@@ -48,7 +48,8 @@ shape = SubResource( 3 )
 transform = Transform( -0.407183, 0, 0.913347, 0, 1, 0, -0.913347, 0, -0.407183, 0, 0, 0 )
 snake_speed = 8.0
 rotation_speed = 3.5
-bodies_gap = 0.78
+max_tilt = 15.0
+bodies_gap = 0.9
 
 [node name="Pickups" type="Spatial" parent="."]
 

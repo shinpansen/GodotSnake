@@ -4,7 +4,6 @@ var parent_body: SnakeBase = null
 var temp_body: SnakeBase = null
 var distance_to_parent: float = 2
 
-var _model: Spatial
 var _start_position: Vector3
 var _start_animation_finised: bool = false
 var _stepping_back: bool = false
@@ -32,7 +31,7 @@ func step_back(dist: float):
 
 
 func _ready():
-	_model = get_node("Model")
+	pass
 
 
 func _physics_process(delta):
@@ -99,11 +98,11 @@ func _move_toward_parent(delta):
 	move_and_collide(to_target * moving_speed * delta)
 	look_at(tr.origin, Vector3.UP)
 	
-	if _model.has_method("rotate_bones"):
+	if model.has_method("rotate_bones"):
 		var angle_skeleton_front = get_skeleton_bone_angle(tr,  tr_skeleton_front)
 		var angle_skeleton_back = get_skeleton_bone_angle(tr,  tr_skeleton_back)
-		_model.rotate_bones(angle_skeleton_front, angle_skeleton_back)
-		_model.start_ik(true)
+		model.rotate_bones(angle_skeleton_front, angle_skeleton_back)
+		model.start_ik(true)
 	
 	#Clearing position history	
 	parent_body.positions_history.pop_at(i)
@@ -113,7 +112,7 @@ func _handle_temp_body():
 	if temp_body != null and temp_body.has_finished_animation(transform.origin):
 		var mesh = node_tools.get_node_type(get_children(), MeshInstance)
 #		mesh.set_surface_material(0, materials[0])
-		_model.visible = true
+		model.visible = true
 		temp_body.queue_free()
 		temp_body = null
 

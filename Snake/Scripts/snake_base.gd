@@ -8,11 +8,16 @@ const vector_tools = preload("res://Scripts/Spatial/vector_tools.gd")
 #]
 const history_max_size: int = 100
 
+var model: Spatial
 var ticker: Ticker
 var moving_speed: float = 10
 var positions_history = []
 
 onready var root = get_tree().root.get_child(0)
+
+
+func _ready():
+	model = get_node("Model")
 
 
 func _init():

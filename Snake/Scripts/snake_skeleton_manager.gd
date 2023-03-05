@@ -1,8 +1,11 @@
 extends Spatial
 
+export var root_name = ""
+
+
 func start_ik(start: bool):
-	$SnakeBody2/Skeleton/FrontSkeletonIK.start(start)
-	$SnakeBody2/Skeleton/BackSkeletonIK.start(start)
+	get_node(root_name).get_node("Skeleton").get_node("FrontSkeletonIK").start(start)
+	get_node(root_name).get_node("Skeleton").get_node("BackSkeletonIK").start(start)
 
 
 func rotate_bones(front_angle_deg: float, back_angle_deg: float):
