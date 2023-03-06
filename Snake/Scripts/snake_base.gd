@@ -29,7 +29,7 @@ func _physics_process(delta):
 	ticker.update(OS)
 
 	if ticker.is_ticking:
-		positions_history.push_front(transform)
+		positions_history.push_front(self.transform)
 	
 	if positions_history.size() > history_max_size:
 		positions_history.pop_at(history_max_size)

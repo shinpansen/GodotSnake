@@ -42,8 +42,6 @@ func _physics_process(delta):
 	# TEST SLOW MO
 	if Input.is_action_pressed("ui_down"):
 		delta /= 4
-	if Input.is_action_pressed("ui_down"):
-		delta /= 4
 	if Input.is_action_just_pressed("ui_space"):
 		add_new_body(Vector3.ZERO)
 		
@@ -64,9 +62,7 @@ func _handle_inputs(delta):
 	var input_h = Input.get_action_strength("ui_left") - Input.get_action_strength("ui_right")
 	if input_h != 0:
 		rotate(Vector3.UP * input_h, rotation_speed * delta)
-		_tilt_head(-input_h * max_tilt)
-	else:
-		_tilt_head(0)
+	_tilt_head(-input_h * max_tilt)
 
 
 func _tilt_head(value: float):

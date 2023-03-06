@@ -73,9 +73,11 @@ func _move_toward_parent(delta):
 	var tr_skeleton_front: Transform
 	var tr_skeleton_back: Transform
 	var dist: float = 0
+	var dist_max: float = distance_to_parent + distance_to_parent/2
 	var i: int = 1
+	var rot: Vector3
 	
-	while i < parent_body.positions_history.size() and dist < distance_to_parent + distance_to_parent/2:
+	while i < parent_body.positions_history.size() and dist < dist_max:
 		tr_previous_test = parent_body.positions_history[i-1]
 		tr_test = parent_body.positions_history[i]
 		dist += tr_previous_test.origin.distance_to(tr_test.origin)
@@ -84,7 +86,7 @@ func _move_toward_parent(delta):
 			tr_previous = tr_previous_test
 		if dist >= distance_to_parent/2 and tr_skeleton_front == Transform.IDENTITY:
 			tr_skeleton_front = tr_test
-		if dist >= distance_to_parent + distance_to_parent/2 and tr_skeleton_back == Transform.IDENTITY:
+		if dist >= dist_max and tr_skeleton_back == Transform.IDENTITY:
 			tr_skeleton_back = tr_test
 		i += 1
 	
@@ -92,20 +94,23 @@ func _move_toward_parent(delta):
 		var dist_ratio: float = (dist - distance_to_parent) / abs(tr_previous.origin.distance_to(tr.origin))
 		tr.origin = tr.origin.move_toward(tr_previous.origin, dist_ratio)
 	
-#	var look_at_vector = Vector3(pos.origin.x, transform.origin.y, pos.origin.z)
-#	transform = transform.looking_at(look_at_vector, Vector3.UP)
 	var to_target = Vector3(tr.origin - transform.origin)
 	move_and_collide(to_target * moving_speed * delta)
 	look_at(tr.origin, Vector3.UP)
-	
-	if model.has_method("rotate_bones"):
-		var angle_skeleton_front = get_skeleton_bone_angle(tr,  tr_skeleton_front)
-		var angle_skeleton_back = get_skeleton_bone_angle(tr,  tr_skeleton_back)
-		model.rotate_bones(angle_skeleton_front, angle_skeleton_back)
-		model.start_ik(true)
+	_rotate_bones(tr, tr_skeleton_front)
 	
 	#Clearing position history	
 	parent_body.positions_history.pop_at(i)
+
+
+func _rotate_bones(tr: Transform, tr_skeleton_front: Transform):
+	var angle_deg = get_skeleton_bone_angle(tr, tr_skeleton_front)
+	if model.has_method("rotate_front_bone"):
+		model.rotate_front_bone(angle_deg)
+		model.start_ik(true)
+	if parent_body.model.has_method("rotate_back_bone"):
+		parent_body.model.rotate_back_bone(-angle_deg)
+		parent_body.model.start_ik(true)
 
 
 func _handle_temp_body(): 
