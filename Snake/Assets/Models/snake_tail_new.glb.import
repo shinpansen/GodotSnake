@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/snake_tail_old.glb-f41ec115083705901294e85e6bb796d2.scn"
+path="res://.import/snake_tail_new.glb-fe2151af8149ad5137ba87dadb43f209.scn"
 
 [deps]
 
-source_file="res://Snake/Assets/Models/snake_tail_old.glb"
-dest_files=[ "res://.import/snake_tail_old.glb-f41ec115083705901294e85e6bb796d2.scn" ]
+source_file="res://Snake/Assets/Models/snake_tail_new.glb"
+dest_files=[ "res://.import/snake_tail_new.glb-fe2151af8149ad5137ba87dadb43f209.scn" ]
 
 [params]
 

@@ -22,14 +22,15 @@ func _ready():
 
 func _init():
 	ticker = Ticker.new()
-	ticker.init(OS)
+	ticker.init(OS, 1000/60)
 
 
 func _physics_process(delta):
 	ticker.update(OS)
 
-	if ticker.is_ticking:
-		positions_history.push_front(self.transform)
+#	if ticker.is_ticking:
+#		positions_history.push_front(self.transform)
+	positions_history.push_front(self.transform)
 	
 	if positions_history.size() > history_max_size:
 		positions_history.pop_at(history_max_size)

@@ -48,8 +48,7 @@ shape = SubResource( 3 )
 transform = Transform( -0.407183, 0, 0.913347, 0, 1, 0, -0.913347, 0, -0.407183, 0, 0, 0 )
 snake_speed = 8.0
 rotation_speed = 3.5
-max_tilt = 15.0
-bodies_gap = 0.8
+bodies_gap = 0.78
 
 [node name="Pickups" type="Spatial" parent="."]
 

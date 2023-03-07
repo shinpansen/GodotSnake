@@ -2,8 +2,8 @@ class_name SnakeHead extends SnakeBase
 
 export(float, 1, 50) var snake_speed = 10
 export(float, 1, 10) var rotation_speed = 4
-export(float, 1, 10) var head_tilt_speed = 2
-export(float, 1, 50) var max_tilt = 10
+export(float, 1, 50) var head_tilt_speed = 8
+export(float, 1, 50) var max_tilt = 15
 export(float, 0, 20) var bodies_gap = 2
 export(int, 0, 20) var nb_bodies = 2
 
@@ -20,6 +20,7 @@ var _bodies_list = []
 func add_new_body(pos: Vector3, anim: bool = true):
 	if _snake_tail == null:
 		_snake_tail = _get_new_body(pos, anim, true)
+		_snake_tail.body_name = "tail"
 		root.add_child(_snake_tail)
 	else:
 		var tra = _get_last_body().transform
@@ -62,22 +63,24 @@ func _handle_inputs(delta):
 	var input_h = Input.get_action_strength("ui_left") - Input.get_action_strength("ui_right")
 	if input_h != 0:
 		rotate(Vector3.UP * input_h, rotation_speed * delta)
-	_tilt_head(-input_h * max_tilt)
+	_tilt_head(-input_h * max_tilt, delta)
 
 
-func _tilt_head(value: float):
+func _tilt_head(angle: float, delta: float):
 	if !ticker.is_ticking:
 		return
 	#TODO - améliorer ce code
 	var rot = model.rotation_degrees
-	if rot[2] < value and value > 0:
-		model.rotation_degrees = Vector3(rot[0], rot[1], rot[2] + head_tilt_speed)
-	elif rot[2] > value and value < 0:
-		model.rotation_degrees = Vector3(rot[0], rot[1], rot[2] - head_tilt_speed)
-	elif rot[2] > value and value == 0:
-		model.rotation_degrees = Vector3(rot[0], rot[1], rot[2] - head_tilt_speed)
-	elif rot[2] < value and value == 0:
-		model.rotation_degrees = Vector3(rot[0], rot[1], rot[2] + head_tilt_speed)
+	var lerp_rot_z = lerp(rot[2], angle, delta * head_tilt_speed)
+	model.rotation_degrees = Vector3(rot[0], rot[1], lerp_rot_z)
+#	if rot[2] < value and value > 0:
+#		model.rotation_degrees = Vector3(rot[0], rot[1], rot[2] + head_tilt_speed)
+#	elif rot[2] > value and value < 0:
+#		model.rotation_degrees = Vector3(rot[0], rot[1], rot[2] - head_tilt_speed)
+#	elif rot[2] > value and value == 0:
+#		model.rotation_degrees = Vector3(rot[0], rot[1], rot[2] - head_tilt_speed)
+#	elif rot[2] < value and value == 0:
+#		model.rotation_degrees = Vector3(rot[0], rot[1], rot[2] + head_tilt_speed)
 
 
 func _get_new_body(pos: Vector3, animation: bool, visible: bool) -> Node:

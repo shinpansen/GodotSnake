@@ -3,6 +3,7 @@ class_name SnakeBody extends SnakeBase
 var parent_body: SnakeBase = null
 var temp_body: SnakeBase = null
 var distance_to_parent: float = 2
+var body_name = ""
 
 var _start_position: Vector3
 var _start_animation_finised: bool = false
@@ -68,26 +69,17 @@ func _play_stepping_back_animation(delta):
 func _move_toward_parent(delta):
 	var tr: Transform
 	var tr_previous: Transform
-	var tr_test: Transform
-	var tr_previous_test: Transform
 	var tr_skeleton_front: Transform
-	var tr_skeleton_back: Transform
 	var dist: float = 0
-	var dist_max: float = distance_to_parent + distance_to_parent/2
 	var i: int = 1
 	var rot: Vector3
 	
-	while i < parent_body.positions_history.size() and dist < dist_max:
-		tr_previous_test = parent_body.positions_history[i-1]
-		tr_test = parent_body.positions_history[i]
-		dist += tr_previous_test.origin.distance_to(tr_test.origin)
-		if dist >= distance_to_parent and tr == Transform.IDENTITY:
-			tr = tr_test
-			tr_previous = tr_previous_test
+	while i < parent_body.positions_history.size() and dist < distance_to_parent:
+		tr = parent_body.positions_history[i]
+		tr_previous = parent_body.positions_history[i-1]
+		dist += tr_previous.origin.distance_to(tr.origin)
 		if dist >= distance_to_parent/2 and tr_skeleton_front == Transform.IDENTITY:
-			tr_skeleton_front = tr_test
-		if dist >= dist_max and tr_skeleton_back == Transform.IDENTITY:
-			tr_skeleton_back = tr_test
+			tr_skeleton_front = tr
 		i += 1
 	
 	if dist > distance_to_parent:
@@ -97,26 +89,28 @@ func _move_toward_parent(delta):
 	var to_target = Vector3(tr.origin - transform.origin)
 	move_and_collide(to_target * moving_speed * delta)
 	look_at(tr.origin, Vector3.UP)
-	_rotate_bones(tr, tr_skeleton_front)
+	_rotate_bones(tr, tr_skeleton_front, delta)
 	
 	#Clearing position history	
 	parent_body.positions_history.pop_at(i)
 
 
-func _rotate_bones(tr: Transform, tr_skeleton_front: Transform):
+func _rotate_bones(tr: Transform, tr_skeleton_front: Transform, delta: float):
 	var angle_deg = get_skeleton_bone_angle(tr, tr_skeleton_front)
 	if model.has_method("rotate_front_bone"):
-		model.rotate_front_bone(angle_deg)
+		model.rotate_front_bone(angle_deg, delta)
 		model.start_ik(true)
 	if parent_body.model.has_method("rotate_back_bone"):
-		parent_body.model.rotate_back_bone(-angle_deg)
+		parent_body.model.rotate_back_bone(-angle_deg, delta)
 		parent_body.model.start_ik(true)
+	if body_name == "tail" and model.has_method("rotate_back_bone"):
+		model.rotate_back_bone(-angle_deg, delta)
+		model.start_ik(true)
 
 
 func _handle_temp_body(): 
 	if temp_body != null and temp_body.has_finished_animation(transform.origin):
 		var mesh = node_tools.get_node_type(get_children(), MeshInstance)
-#		mesh.set_surface_material(0, materials[0])
 		model.visible = true
 		temp_body.queue_free()
 		temp_body = null

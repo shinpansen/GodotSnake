@@ -24,15 +24,15 @@ target_node = NodePath("../../../FrontPosition3D/FrontTarget")
 [node name="BackSkeletonIK" type="SkeletonIK" parent="SnakeTail/Skeleton" index="2"]
 process_priority = 1
 root_bone = "SnakeTail.BoneBRoot"
-tip_bone = "SnakeTail.BoneBTarget"
+tip_bone = "SnakeTail.BoneB4"
 target_node = NodePath("../../../BackPosition3D/BackTarget")
 
 [node name="FrontPosition3D" type="Position3D" parent="." index="1"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.864327 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.874557 )
 
 [node name="FrontTarget" type="Position3D" parent="FrontPosition3D" index="0"]
 
 [node name="BackPosition3D" type="Position3D" parent="." index="2"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -1.02413 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -2.596 )
 
 [node name="BackTarget" type="Position3D" parent="BackPosition3D" index="0"]
