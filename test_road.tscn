@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://test_road.gd" type="Script" id=1]
+[ext_resource path="res://Materials/Green/light_green.tres" type="Material" id=2]
+
+[sub_resource type="Curve3D" id=1]
+_data = {
+"points": PoolVector3Array( -0.0492558, 0, 0.339319, 0.0492558, 0, -0.339319, 0.015984, 0, 1.26787, 0.103985, 0, 0.158714, -0.103985, 0, -0.158714, -0.383537, 0, 0.840981, 0.0492561, 0, 0.49256, -0.0492561, 0, -0.49256, -0.640763, 0, 0.260855, 0, 0, 0, 0, 0, 0, -0.197459, 0, -0.242651, -0.0218916, 0, 0.0711476, 0.0218916, 0, -0.0711476, 0.213008, 0, -0.494404, 0.399521, 0, 0.0109458, -0.399521, 0, -0.0109458, -0.120838, 0, -1.18946 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0, 0 )
+}
+
+[node name="Spatial" type="Spatial"]
+script = ExtResource( 1 )
+line_resolution = 6
+
+[node name="Path" type="Path" parent="."]
+curve = SubResource( 1 )
+
+[node name="CSGPolygon" type="CSGPolygon" parent="."]
+snap = 0.0001
+polygon = PoolVector2Array( 0, 0.1, 0.0866025, 0.05, 0.0866025, -0.05, 1.22461e-17, -0.1, -0.0866025, -0.05, -0.0866025, 0.05 )
+mode = 2
+path_node = NodePath("../Path")
+path_interval_type = 1
+path_interval = 0.01
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = ExtResource( 2 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( -0.306853, -0.931904, 0.193379, 0.0353654, 0.191876, 0.980782, -0.9511, 0.307795, -0.0259206, 0.52548, 1.90144, -0.04881 )

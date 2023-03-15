@@ -60,28 +60,24 @@ func _init_snake():
 
 
 func _handle_inputs(delta):
+	#TODO : add input manager
 	var input_h = Input.get_action_strength("ui_left") - Input.get_action_strength("ui_right")
-	if input_h != 0:
-		rotate(Vector3.UP * input_h, rotation_speed * delta)
-	_tilt_head(-input_h * max_tilt, delta)
+	_tilt_head(input_h, delta)
+	_rotate_head(input_h, delta)
+	
 
-
-func _tilt_head(angle: float, delta: float):
-	if !ticker.is_ticking:
-		return
-	#TODO - améliorer ce code
+func _tilt_head(input_h: float, delta: float):
 	var rot = model.rotation_degrees
-	var lerp_rot_z = lerp(rot[2], angle, delta * head_tilt_speed)
+	var target_angle: float = -input_h * max_tilt
+	var lerp_rot_z = lerp(rot[2], target_angle, delta * head_tilt_speed)
 	model.rotation_degrees = Vector3(rot[0], rot[1], lerp_rot_z)
-#	if rot[2] < value and value > 0:
-#		model.rotation_degrees = Vector3(rot[0], rot[1], rot[2] + head_tilt_speed)
-#	elif rot[2] > value and value < 0:
-#		model.rotation_degrees = Vector3(rot[0], rot[1], rot[2] - head_tilt_speed)
-#	elif rot[2] > value and value == 0:
-#		model.rotation_degrees = Vector3(rot[0], rot[1], rot[2] - head_tilt_speed)
-#	elif rot[2] < value and value == 0:
-#		model.rotation_degrees = Vector3(rot[0], rot[1], rot[2] + head_tilt_speed)
+	
 
+func _rotate_head(input_h: float, delta: float):
+	var current_rotation: float = model.rotation_degrees[2]
+	var rotation_ratio: float = abs(current_rotation)/max_tilt
+	rotate(Vector3.UP * input_h, rotation_speed * delta * rotation_ratio)
+	
 
 func _get_new_body(pos: Vector3, animation: bool, visible: bool) -> Node:
 	var scene = parts_scenes[_get_new_body_scene_id()].instance()
